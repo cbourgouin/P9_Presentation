@@ -1,0 +1,17 @@
+.js, .html {
+    font-size: 20px;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.long-text {
+    font-size: 17px;
+}
+
+.long-long-text {
+    font-size: 14px;
+}
+
+.long-long-long-text {
+    font-size: 11px;
+}

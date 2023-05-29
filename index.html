@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./node_modules/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="./node_modules/reveal.js/dist/theme/moon.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section data-markdown>
+                <textarea data-template>
+                    # Contexte
+                    ![Logo de Billed](./image/logo.png)
+
+                    Note:
+                    - nous → dev frontend
+                    - Billed → Solutions Saas RH
+                    - demission avant fin de projet →note de frais
+                    - email du lead developper
+                    - Finir le projet
+                    - Test Back end terminer
+                    - Front end → 
+                        - Debbuguer le cote admin
+                        - Tester et debbuguer le coté employée
+                    - Redaction d’un test end to end
+                </textarea>
+            </section>
+            <section>
+                <section data-markdown>
+                    <textarea data-template>
+                        # Ecriture des tests
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ## Rapport de test jest
+                        ![Rapport de test jest](./image/screenshoot/2023-05-19_16-52-43.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ## Ajout des tests 
+                        ### Test unitaire de bills.js
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Given I am connected as an employee > When I am on Bills Page > Then bill icon in vertical layout should be highlighted
+                        
+                        ```js
+                            Object.defineProperty(window, "localStorage", {
+                              value: localStorageMock,
+                            });
+                            window.localStorage.setItem(
+                              "user",
+                              JSON.stringify({
+                                type: "Employee",
+                              })
+                            );
+                            const root = document.createElement("div");
+                            root.setAttribute("id", "root");
+                            document.body.append(root);
+                            router();
+                            window.onNavigate(ROUTES_PATH.Bills);
+                            await waitFor(() => screen.getByTestId("icon-window"));
+                            const windowIcon = screen.getByTestId("icon-window");
+                            //to-do write expect expression
+                            expect(windowIcon.classList.contains("active-icon")).toBe(true);
+                        ``` 
+
+                        Note:
+                        - Given I am connected as an employee > When I am on Bills Page > Then bill icon in vertical layout should be highlighted
+                        - Étant donné que je suis connecté en tant qu'employé> Lorsque je suis sur la page Factures> L'icône de facture en disposition verticale doit être mise en surbrillance
+                        - Modification de la dernière ligne
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Given I am connected as an employee > When I am on Bills Page > Then class Bills is defined
+                        
+                        ```js
+                            const bill = new Bills({
+                                document: document,
+                                onNavigate: ROUTES_PATH.Bills,
+                                store: store,
+                                localStorage: localStorageMock,
+                            });
+                            expect(bill).toBeDefined();
+                        ``` 
+
+                        Note:
+                        - Given I am connected as an employee > When I am on Bills Page > Then class Bills is defined
+                        - Étant donné que je suis connecté en tant qu'employé > Lorsque je suis sur la page Factures > Alors la classe Factures est définie
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Given I am connected as an employee > When I am on Bills Page > Then fonction getBill return something
+                        
+                        ```js
+                            const bill = new Bills({
+                                document: document,
+                                onNavigate: ROUTES_PATH.Bills,
+                                store: store,
+                                localStorage: localStorageMock,
+                            });
+                            let returnGetBill = await bill.getBills();
+                            expect(returnGetBill).toBeDefined();
+                        ``` 
+
+                        Note:
+                        - Given I am connected as an employee > When I am on Bills Page > Then fonction getBill return something
+                        - Étant donné que je suis connecté en tant qu'employé > Lorsque je suis sur la page Factures > Alors la fonction getBill renvoie quelque chose
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Given I am connected as an employee > When I am on Bills Page > Then fonction getBill return the same number of bills
+                        
+                        ```js
+                            const bill = new Bills({
+                                document: document,
+                                onNavigate: ROUTES_PATH.Bills,
+                                store: store,
+                                localStorage: localStorageMock,
+                            });
+                            const returnGetBill = await bill.getBills();
+                            const expectedRes = await mockStore.bills().list();
+                            expect(returnGetBill.length).toBe(expectedRes.length);
+                        ``` 
+
+                        Note:
+                        - Given I am connected as an employee > When I am on Bills Page > Then fonction getBill return the same number of bills
+                        - Étant donné que je suis connecté en tant qu'employé > Lorsque je suis sur la page Factures > Alors la fonction getBill renvoie le même nombre de factures
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Given I am connected as an employee > When I am on Bills Page > Then fonction getBill return the same number of bills
+                        
+                        ```js
+                            const bill = new Bills({
+                                document: document,
+                                onNavigate: ROUTES_PATH.Bills,
+                                store: store,
+                                localStorage: localStorageMock,
+                            });
+                            const returnGetBill = await bill.getBills();
+                            const expectedRes = await mockStore.bills().list();
+                            expect(returnGetBill.length).toBe(expectedRes.length);
+                        ``` 
+
+                        Note:
+                        - Given I am connected as an employee > When I am on Bills Page > Then fonction getBill return the same number of bills
+                        - Étant donné que je suis connecté en tant qu'employé > Lorsque je suis sur la page Factures > Alors la fonction getBill renvoie le même nombre de factures
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Test d'integrations de bills.js
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Given I am connected as an employee > When I am on Bills Page > And i click on the icon eye of the first element > Then the document appears
+                        
+                        ```js
+                            document.body.innerHTML = BillsUI({ data: bills });
+                            const onNavigateMock = (pathname) => {
+                              document.body.innerHTML = ROUTES({ pathname });
+                            };
+                            Object.defineProperty(window, "localStorage", {
+                              value: localStorageMock,
+                            });
+                            window.localStorage.setItem(
+                              "user",
+                              JSON.stringify({
+                                type: "Employee",
+                              })
+                            );
+                            const store = null;
+                            const bill = new Bills({
+                              document: document,
+                              onNavigate: onNavigateMock,
+                              store: store,
+                              localStorage: window.localStorage,
+                            });
+                            const iconEyes = screen.getAllByTestId("icon-eye");
+                            if (iconEyes) {
+                              iconEyes.forEach((iconEye) => {
+                                const handleClickIconEyeMock = jest.fn(
+                                  bill.handleClickIconEye(iconEye)
+                                );
+                                iconEye.addEventListener("click", handleClickIconEyeMock);
+                                userEvent.click(iconEye);
+                                expect(handleClickIconEyeMock).toHaveBeenCalled();
+                                const modal = screen.getByText("Justificatif");
+                                expect(modal).toBeTruthy();
+                              });
+                            }
+                        ``` 
+
+                        Note:
+                        - Given I am connected as an employee > When I am on Bills Page > And i click on the icon eye of the first element > Then the document appears
+                        - Étant donné que je suis connecté en tant qu'employé > Lorsque je suis sur la page Factures > Et je clique sur l'icône œil du premier élément > Ensuite, le document apparaît
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Given I am connected as an employee > When I am on Bills Page > And i click on the new Bill button > Then the page new bill appeard
+                        
+                        ```js
+                            const onNavigateMock = (pathname) => {
+                                document.body.innerHTML = ROUTES({ pathname });
+                            };
+                                Object.defineProperty(window, "localStorage", {
+                                value: localStorageMock,
+                            });
+                            window.localStorage.setItem(
+                                "user",
+                                JSON.stringify({
+                                    type: "Employee",
+                                })
+                            );
+                            const store = null;
+                            const bill = new Bills({
+                                document: document,
+                                onNavigate: onNavigateMock,
+                                store: store,
+                                localStorage: window.localStorage,
+                            });
+                            const root = document.createElement("div");
+                            root.setAttribute("id", "root");
+                            document.body.append(root);
+                            router();
+                            window.onNavigate(ROUTES_PATH.Bills);
+                            const handleClickNewBillMock = jest.fn(bill.handleClickNewBill);
+                            const icon1 = screen.getByTestId("btn-new-bill");
+                            icon1.addEventListener("click", handleClickNewBillMock);
+                            userEvent.click(icon1);
+                            expect(handleClickNewBillMock).toHaveBeenCalled();
+                            const newBill = screen.getByTestId("form-new-bill");
+                            expect(newBill).toBeTruthy();
+                        ``` 
+
+                        Note:
+                        - Given I am connected as an employee > When I am on Bills Page > And i click on the new Bill button > Then the page new bill appeard
+                        - Étant donné que je suis connecté en tant qu'employé > Lorsque je suis sur la page Factures > Et que je clique sur le bouton nouvelle facture > Ensuite, la page nouvelle facture est apparue
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Test d'integrations GET de bills.js
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Given I am connected as an employee > When I am on Bills Page > fetches bills from mock API GET
+                        
+                        ```js
+                            localStorage.setItem(
+                                "user",
+                                JSON.stringify({
+                                  type: "Employee",
+                                })
+                              );
+                              const root = document.createElement("div");
+                              root.setAttribute("id", "root");
+                              document.body.append(root);
+                              router();
+                              window.onNavigate(ROUTES_PATH.Bills);
+                              await waitFor(() => screen.getByText("En attente"));
+                              const contentRefused = await screen.getAllByText("Refused");
+                              expect(contentRefused).toBeTruthy();
+                              const contentAccepted = await screen.getByText("Accepté");
+                              expect(contentAccepted).toBeTruthy();
+                        ``` 
+
+                        Note:
+                        - Given I am connected as an employee > When I am on Bills Page > fetches bills from mock API GET
+                        - Étant donné que je suis connecté en tant qu'employé > Lorsque je suis sur la page Factures > récupère les factures de l'API simulée GET
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Given I am connected as an employee > When I am on Bills Page > When an error occurs on API > fetches bills from an API and fails with 404 message error
+                        
+                        ```js
+                            localStorage.setItem(
+                                "user",
+                                JSON.stringify({
+                                  type: "Employee",
+                                })
+                              );
+                              const root = document.createElement("div");
+                              root.setAttribute("id", "root");
+                              document.body.append(root);
+                              router();
+                              window.onNavigate(ROUTES_PATH.Bills);
+                              await waitFor(() => screen.getByText("En attente"));
+                              const contentRefused = await screen.getAllByText("Refused");
+                              expect(contentRefused).toBeTruthy();
+                              const contentAccepted = await screen.getByText("Accepté");
+                              expect(contentAccepted).toBeTruthy();
+                        ``` 
+
+                        Note:
+                        - Given I am connected as an employee > When I am on Bills Page > When an error occurs on API > fetches bills from an API and fails with 404 message error
+                        - Étant donné que je suis connecté en tant qu'employé> Lorsque je suis sur la page Factures> Lorsqu'une erreur se produit sur l'API> récupère les factures d'une API et échoue avec une erreur de message 404
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Test unitaire de newBill.js
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Given I am connected as an employee > When I am on NewBill Page > Then class NewBills is defined
+                        
+                        ```js
+                            const html = NewBillUI();
+                            document.body.innerHTML = html;
+                            const newBill = new NewBill({
+                              document: document,
+                              onNavigate: ROUTES_PATH["NewBill"],
+                              store: store,
+                              localStorage: localStorageMock,
+                            });
+                            expect(newBill).toBeDefined();
+                        ``` 
+                        
+                        Note:
+                        - Given I am connected as an employee > When I am on NewBill Page > Then class NewBills is defined
+                        - Étant donné que je suis connecté en tant qu'employé > Lorsque je suis sur la page NewBill > Alors la classe NewBills est définie
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Test d'integrations de newBill.js
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Given I am connected as an employee > When I change the fill in input file > Then file in input is change
+                        
+                        ```js long-text
+                            Object.defineProperty(window, "localStorage", {
+                                value: localStorageMock,
+                              });
+                              localStorage.setItem("user", JSON.stringify({ type: "Employee" }));
+                              const root = document.createElement("div");
+                              root.setAttribute("id", "root");
+                              document.body.append(root);
+                              router();
+                              window.onNavigate(ROUTES_PATH.NewBill);
+                              await waitFor(() => screen.getAllByTestId("form-new-bill"));
+                              const file = new File(["hello"], "hello.txt", { type: "text/plain" });
+                              const fileInput = screen.getAllByTestId("file");
+                              const notExpected = fileInput[0].files;
+                              fireEvent.change(fileInput[0], { target: { files: [file] } });
+                              expect(fileInput[0].files[0]).toBe(file);
+                        ``` 
+                        
+                        Note:
+                        - Given I am connected as an employee > When I change the fill in input file > Then file in input is change
+                        - Étant donné que je suis connecté en tant qu'employé> Lorsque je modifie le fichier d'entrée de remplissage> Alors le fichier d'entrée est modifié
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Test d'integrations POST de newBill.js
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Given I am connected as an employee > When i click on the submit button > fetches newBill from mock API POST
+                        
+                        ```js long-text
+                            Object.defineProperty(window, "localStorage", {
+                              value: localStorageMock,
+                            });
+                            localStorage.setItem("user", JSON.stringify({ type: "Employee" }));
+                            document.body.innerHTML = NewBillUI();
+                            await waitFor(() => screen.getByText(`Envoyer`));
+                            const onNavigate = (pathname) => {
+                              document.body.innerHTML = ROUTES({ pathname });
+                            };
+                            const newBill = new NewBill({
+                              document,
+                              onNavigate,
+                            store,
+                              localStorage: window.localStorage,
+                            });
+                            const handleSubmitMock = jest.fn((e) => newBill.handleSubmit(e));
+                            screen
+                              .getByTestId("form-new-bill")
+                              .addEventListener("submit", handleSubmitMock);
+                            screen.getByTestId("datepicker").value = "2023-04-21";
+                            screen.getByTestId("amount").value = "348";
+                            screen.getByTestId("pct").value = "20";
+                            const file = new File(["hello"], "hello.txt", { type: "text/plain" });
+                            const fileInput = screen.getAllByTestId("file");
+                            fireEvent.change(fileInput[0], { target: { files: [file] } });
+                            const submit = screen.getByText("Envoyer");
+                            submit.click();
+                            expect(handleSubmitMock).toHaveBeenCalled();
+                        ``` 
+                        
+                        Note:
+                        - Given I am connected as an employee > When i click on the submit button > fetches newBill from mock API POST
+                        - Étant donné que je suis connecté en tant qu'employé> Lorsque je clique sur le bouton d'envoi> récupère newBill à partir de la simulation d'API POST
+                    </textarea>
+                </section>
+            </section>
+            <section>
+                <section data-markdown>
+                    <textarea data-markdown>
+                        # Resolutions des bugs
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ## Bugs 1
+                        ![Bugs 1](./image/screenshoot/2023-05-26_14-48-53.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Problème
+                        ![Rapport de test jest](./image/screenshoot/2020-07-24_01-08-55.png)
+
+                        Note:
+                        - Le test Bills / les notes de frais s'affichent par ordre décroissant est passé au rouge.
+                        - To-do: Faire passer le test au vert en réparant la fonctionnalité.
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Résolution
+                        ```js long-text
+                            const rows = (data) => {
+                                return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
+                            }
+                        ```
+    
+                        ```js long-long-long-text
+                            const rows = (data) => {
+                                return (data && data.length) ? data.sort((a, b) => (a.date < b.date ? 1 : -1)).map(bill => row(bill)).join("") : ""
+                            }
+                        ```
+
+                        Note:
+                        - Ajout d’une fonction de trie sur l’affichage dans le fichier view/BillsUI.js
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ## Bugs 2
+                        ![Bugs 2](./image/screenshoot/2023-05-26_14-53-37.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Problème
+                        ![Rapport de test jest](./image/screenshoot/2023-05-26_15-03-07.png)
+
+                        Note:
+                        - Dans le rapport de test "Login, si un administrateur remplit correctement les champs du Login, il devrait naviguer sur la page Dashboard", le test est passé au rouge (cf. copie d'écran).
+                        - To-do: Faire passer le test au vert en réparant la fonctionnalité.
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Résolution
+                        ![Console du debbuggers](./image/screenshoot/2023-05-26_15-00-07.png)
+                        ![erreur du fichier](./image/screenshoot/2023-05-26_15-00-52.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ```js long-long-text
+                            email: e.target.querySelector(`input[data-testid="employee-email-input"]`).value,
+                            password: e.target.querySelector(`input[data-testid="employee-password-input"]`).value,
+                        ```
+    
+                        ```js long-long-text
+                            email: e.target.querySelector(`input[data-testid="admin-email-input"]`).value,
+                            password: e.target.querySelector(`input[data-testid="admin-password-input"]`).value,
+                        ```
+
+                        Note:
+                        - Ajout des bon identifiant des inputs pour les utilisateur admin dans le fichier containers/Login.js
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ## Bugs 3
+                        ![](./image/screenshoot/2023-05-26_16-32-58.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Problème
+
+                        Note:
+                        - problème au niveaux des fichier -> doit s'afficher dans la modale + nom du fichiers dans le dashboard
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Résolution
+                        ```html long-long-long-text
+                            <div class="col-half">
+                                <label for="file" class="bold-label">Justificatif</label>
+                                <input required type="file" class="form-control blue-border" data-testid="file" accept=".jpg, .jpeg, .png" />
+                            </div>
+                        ```
+    
+                        ```js long-long-text
+                        handleChangeFile = (e) => {
+                            e.preventDefault();
+                            const file = this.document.querySelector(`input[data-testid="file"]`)
+                              .files[0];
+                            const filePath = e.target.value.split(/\\/g);
+                            const fileName = filePath[filePath.length - 1];
+                            const formData = new FormData();
+                            const email = JSON.parse(localStorage.getItem("user")).email;
+                            const allowedExtensions = ["png", "jpg", "jpeg"];
+                            const fileExtension = file.name.split(".").pop().toLowerCase();
+                            formData.append("file", file);
+                            formData.append("email", email);
+                        
+                            if (allowedExtensions.includes(fileExtension)) {
+                              this.store
+                                .bills()
+                                .create({
+                                  data: formData,
+                                  headers: {
+                                    noContentType: true,
+                                  },
+                                })
+                                .then(({ fileUrl, key }) => {
+                                  console.log(fileUrl);
+                                  this.billId = key;
+                                  this.fileUrl = fileUrl;
+                                  this.fileName = fileName;
+                                })
+                                .catch((error) => console.error(error));
+                            } else {
+                              this.document.querySelector(`input[data-testid="file"]`).value = '';
+                              alert('Veuillez sélectionner un fichier avec une extension .png, .jpg ou .jpeg.');
+                            }
+                          };
+                        ```
+
+                        Note:
+                        - Ajout d'une specification du type de fichiers demander dans le formulaire de newBill
+                        - Ajout d'une verification de l'extension du fichier au niveaux du submit
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ## Bugs 4
+                        ![](./image/screenshoot/2023-05-26_16-37-24.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Problème
+
+                        Note:
+                        - problème:
+                            - connecter en admin
+                            - deplie une liste de ticket
+                            - selection d'un ticket 
+                            - deplie une liste de ticket
+                            - selection d'un ticket 
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### Résolution
+                        <!-- A Finir -->
+
+                    </textarea>
+                </section>
+            </section>
+            <section> 
+                <section data-markdown>
+                    <textarea data-template>
+                        # Test E2E
+                        ![Scenario 1 et 2](./image/screenshoot/2023-05-26_16-51-37.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ![Scenario 3 et 4](./image/screenshoot/2023-05-26_16-55-17.png)
+                        ![Scenario 5 et 6](./image/screenshoot/2023-05-26_16-56-39.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ![Scenario 7,8 et 9](./image/screenshoot/2023-05-26_17-21-05.png)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ![Scenario 10, 11 et 12](./image/screenshoot/2023-05-29_15-03-18.png)
+                    </textarea>
+                </section>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    # Conclusion
+
+                    Note:
+                    - Importance de tester son code
+                    - Comparaison avec d'autres techno telle que Cypress
+                </textarea>
+            </section>
+        </div>
+    </div>
+
+    <script type="module">
+        import Reveal from "./node_modules/reveal.js/dist/reveal.esm.js";
+        import Markdown from "./node_modules/reveal.js/plugin/markdown/markdown.esm.js";
+        import RevealNotes from "./node_modules/reveal.js/plugin/notes/notes.esm.js";
+
+        let deck = new Reveal({
+            plugins: [Markdown, RevealNotes]
+        })
+        deck.initialize();
+    </script>
+</body>
+
+</html>
